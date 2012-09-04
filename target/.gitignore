@@ -1,0 +1,8 @@
+/classes/
+/generated-sources/
+/maven-archiver/
+/surefire/
+/test-classes/
+/classes.timestamp
+/org.kevoree.web.triskell-1.8.3.jar
+/org.kevoree.web.triskell-1.8.4-SNAPSHOT.jar
