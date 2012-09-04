@@ -1,0 +1,202 @@
+<data 
+    
+    wiki-section="Triskell team Timeline"
+    >
+	<!-- http://www.simile-widgets.org/wiki/Timeline_EventSources -->
+	<!-- Color code :
+		nothing (default) for ANR and French projects
+		color="Darkorange" for INRIA projects (ADT, ...)
+		color="Green" for Regional council projects
+		color="GoldenRod" for European projects
+		color="Indigo" for International projects
+		color="Brown" for single company projects (including CIFRE)
+	Note :
+		trackNum can be used to override the automatic layout of events on the Timeline. 
+		HTML is accepted in the description but need to use an escaped version  of the tags ex: &lt;i&gt;ref. Treachery in Dallas, p 320&lt;/i&gt;
+
+	TODO : really use classname and css instead of color code ...
+	-->
+	
+	<!-- contracts -->
+	<event start="Jan 01 2005" end="Dec 31 2008" isDuration="true"
+        title="ANR FAROS"
+	 link="http://www2.lifl.fr/faros/">
+        </event>
+	<event start="Jun 01 2007" end="Jun 16 2009" isDuration="true"
+        title="ANR DOMINO"
+	 link="http://www.domino-rntl.org">
+        </event>
+	<event start="Jan 01 2009" end="Mar 31 2012" isDuration="true"
+        title="ANR MOVIDA"
+	 link="http://movida.gforge.inria.fr/">
+		MOVIDA (MOdelling VIews and Decision support for Architects) : Support a la modelisation de vues et aide a la decision pour les architectes
+        </event>
+	<event start="Sep 01 2012" end="Sep 31 2014" isDuration="true"
+        title="ANR Infra-JVM">
+        </event>
+	<event start="Jan 01 2007" end="Mar 31 2009" isDuration="true"
+        title="OpenEmbeDD"
+		link="http://www.openembedd.org">
+		Model Driven Engineering open-source platform for Real-Time and Embedded systems.&lt;/br&gt; 
+		ANR RNTL project. 		
+        </event>
+	<event start="Jan 01 2008" end="Dec 31 2009" isDuration="true"
+        title="ARED TELODA (Regional council)"
+		color="Green"
+		>
+        </event>
+	<event start="Jan 01 2008" end="Dec 31 2009" isDuration="true"
+        title="Usine Logicielle (Regional council)"
+		color="Green"
+		>
+        </event>
+	<event start="Jan 01 2009" end="Dec 31 2009" isDuration="true"
+        title="MOPCOM-I (Regional council)"
+		color="Green">
+        </event>
+	<event start="Jan 01 2010" end="Dec 31 2011" isDuration="true"
+        title="ARED AMMA (Regional council)"
+		color="Green">
+        </event>
+	<event start="Jan 01 2010" end="Dec 31 2011" isDuration="true"
+        title="ENTIMID (Regional council)"
+		color="Green">
+        </event>
+	<event start="Jan 01 2010" end="Dec 31 2010" isDuration="true"
+        title="MOPCOM (Regional council)"
+		color="Green">
+Modelisation and specialization of platform and MDA component for SOC (System On Chip)
+        </event>
+		
+	<event start="Jan 01 2010" end="Dec 31 2010" isDuration="true"
+        title="Regional council scholarship"
+		color="Green">
+        </event>
+	<event start="Jan 01 2011" end="Dec 31 2011" isDuration="true"
+        title="ARED ESML Regional council"
+		color="Green">
+        </event>
+
+	<event start="Jan 01 2012" end="Dec 31 2012" isDuration="true"
+        title="SAD SOFTLIVE Regional council"
+		color="Green">
+        </event>
+	<event start="Jan 01 2012" end="Dec 31 2012" isDuration="true"
+        title="SELFCITY Regional council"
+		color="Green">
+        </event>
+		
+	<event start="Jan 01 2009" end="Dec 31 2011" isDuration="true"
+        title="PICS LUX CNRS">
+        </event>
+	<event start="Jan 01 2011" end="Dec 31 2011" isDuration="true"
+        title="AS GEMOC CNRS">
+        </event>
+	<event start="Jan 01 2008" end="Dec 31 2009" isDuration="true"
+        title="FP7-NoE AOSD"
+		color="GoldenRod"
+		link="http://www.aosd-europe.net/"
+		>
+	Network of Excellence on Aspect-Oriented Software Development.&lt;/br&gt;
+	FP7 (European Union) projet.
+        </event>
+	<event start="Jan 01 2008" end="Dec 31 2010" isDuration="true"
+        title="FP7-STREP DiVA"
+        link="http://www.ict-diva.eu/"
+		color="GoldenRod"
+		>
+	Dynamic variability in complex, dynamic systems.&lt;/br&gt;
+	FP7 (European Union) projet.
+        </event>
+	<event start="Mar 01 2008" end="Feb 28 2012" isDuration="true"
+        title="FP7-NoE S-CUBE"
+	 link="http://www.s-cube-network.eu/"
+		color="GoldenRod">
+		Network of Excellence on Software Services and Systems
+        </event>
+	<event start="May 01 2006" end="Apr 31 2010" isDuration="true"
+        title="FP7-IP SPEEDS"
+	 link="http://www.speeds.eu.com/"
+		color="GoldenRod">
+		SPEculative and Exploratory Design in Systems Engineering.
+        </event>
+
+		<event start="Jan 01 2010" end="Dec 31 2010" isDuration="true"
+        title="NoE ARTIST2"
+		color="GoldenRod"
+		link="http://www.artist-embedded.org">
+        </event>
+	<event start="Jan 01 2009" end="Dec 31 2009" isDuration="true"
+        title="CESAR ARTEMIS"
+		color="GoldenRod">
+        </event>
+	<event start="Jan 01 2009" end="Dec 31 2011" isDuration="true"
+        title="CHESS ARTEMIS"
+		color="GoldenRod">
+        </event>
+	<event start="Jan 01 2010" end="Dec 31 2012" isDuration="true"
+        title="FP7-NoE NESSOS"
+		color="GoldenRod">
+        </event>
+	<event start="Jan 01 2009" end="Dec 31 2009" isDuration="true"
+        title="ITEA OPEES">
+        </event>
+	<event start="Jan 01 2011" end="Dec 31 2012" isDuration="true"
+        title="Marie Curie RELATE">
+        </event>
+	<event start="Jan 01 2008" end="Dec 31 2010" isDuration="true"
+        title="MATT/MOCCA"
+		color="Indigo">
+        </event>			
+	<event start="Sep 01 2005" end="Sep 31 2008" isDuration="true"
+        title="CIFRE France Telecom"
+		color="Brown">
+        </event>
+	<event start="Sep 01 2010" end="Sep 31 2013" isDuration="true"
+        title="CIFRE Kereval"
+		color="Brown">
+        </event>
+	<event start="Sep 01 2010" end="Sep 31 2013" isDuration="true"
+        title="CIFRE EDF"
+		color="Brown">
+        </event>	
+
+	<event start="Sep 01 2010" end="Sep 31 2013" isDuration="true"
+        title="CIFRE SODIFRANCE"
+		color="Brown">
+        </event>	
+	<event start="Sep 01 2012" end="Sep 31 2015" isDuration="true"
+        title="CIFRE ALL4TEC"
+		color="Brown">
+        </event>	
+
+	<event start="Sep 01 2011" end="Sep 31 2014" isDuration="true"
+        title="CIFRE ZENEXITY"
+		color="Brown">
+        </event>
+	<event start="Jan 01 2011" end="Dec 31 2013" isDuration="true"
+        title="VARYMDE Thales"
+		color="Brown">
+        </event>
+		
+	<event start="Oct 01 2008" end="Oct 01 2010" isDuration="true"
+        title="ADT Kermeta/Pramana"
+		color="Darkorange">
+        </event>
+	<event start="Oct 01 2010" end="Oct 01 2012" isDuration="true"
+        title="ADT KerGecos"
+		color="Darkorange">
+        </event>
+	<event start="Oct 01 2011" end="Oct 01 2013" isDuration="true"
+        title="ADT DAUM"
+	 link="http://daum.gforge.inria.fr"
+		color="Darkorange">
+        </event>
+<event start="Jul 01 2008" end="Oct 01 2010" isDuration="true"
+        title="ADT Galaxy"
+	 link="http://galaxy.gforge.inria.fr/"
+		color="Darkorange">
+NRIA ADT Galaxy : aims to provide an IT agile platform, built on dynamic software architecture principles, and fitting for flexibility, dynamical reconfiguration, adaptability, continuity and autonomic computing.
+        </event>
+
+</data>

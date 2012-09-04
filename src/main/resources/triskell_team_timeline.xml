@@ -1,0 +1,76 @@
+<data 
+    wiki-section="Triskell team Timeline"
+    >
+	<!-- look for the appropriate icon:
+		http://www.irisa.fr/triskell/timeline/icons/person-plus.png
+		http://www.irisa.fr/triskell/timeline/icons/person-minus.png
+		http://www.irisa.fr/triskell/timeline/icons/badge-circle-power.png
+		http://www.irisa.fr/triskell/timeline/icons/badge-circle-check.png
+		http://www.irisa.fr/triskell/timeline/icons/star.png
+		
+		Note:
+		trackNum="0" can be used to force the line for a given item
+	-->
+	
+	<!-- Team main events (creation, evaluation permanent members arrivals, ...) -->
+	<event start="Jan 01 2001" title="Triskell team creation"
+		icon="http://www.irisa.fr/triskell/timeline/icons/badge-circle-power.png">
+        </event>
+	<event start="Nov 01 2003" title="Evaluation"
+		icon="http://www.irisa.fr/triskell/timeline/icons/badge-circle-check.png"
+		>
+		Team evaluation
+        </event>
+	<event start="Nov 01 2006" title="Evaluation"
+		icon="http://www.irisa.fr/triskell/timeline/icons/badge-circle-check.png"
+		trackNum="0">
+		Team evaluation
+        </event>
+	<event start="Nov 01 2008" title="Evaluation"
+		icon="http://www.irisa.fr/triskell/timeline/icons/badge-circle-check.png"
+		>
+		Team evaluation
+        </event>
+	<event start="Nov 01 2012" title="final evaluation"
+		icon="http://www.irisa.fr/triskell/timeline/icons/badge-circle-check.png"
+		>
+		final team evaluation
+        </event>
+	<event start="Sep 01 2009" title="Benoit Combemale"
+		icon="http://www.irisa.fr/triskell/timeline/icons/person-plus.png"
+		link="http://people.irisa.fr/Benoit.Combemale/">
+		Benoit Combemale joining the team
+        </event>
+	<event start="Sep 01 2009" title="Arnaud Blouin"
+		icon="http://www.irisa.fr/triskell/timeline/icons/person-plus.png"
+		link="http://people.irisa.fr/Arnaud.Blouin/index.html">
+		Arnaud Blouin joining the team.
+        </event>
+	<event start="Sep 01 2010" title="Johann Bourcier"
+		icon="http://www.irisa.fr/triskell/timeline/icons/person-plus.png"
+		link="http://sites.google.com/site/johannbourcier/">
+		Johann Bourcier joining the team.
+        </event>
+	
+	<event start="Sep 01 2004" title="Benoit Baudry"
+		icon="http://www.irisa.fr/triskell/timeline/icons/person-plus.png"
+		link="http://people.rennes.inria.fr/Benoit.Baudry/"
+		trackNum="2">
+		Benoit Baudry joining the team.
+        </event>
+	<event start="Sep 01 2005" title="Olivier Barais"
+		icon="http://www.irisa.fr/triskell/timeline/icons/person-plus.png"
+		link="http://www.irisa.fr/triskell/perso_pro/obarais/pmwiki.php">
+		Olivier Barais joining the team.
+        </event>
+		
+	<event start="Jan 01 2012" title="Jean-Marc Jezequel promoted as IRISA Director"
+		icon="http://www.irisa.fr/triskell/timeline/icons/star.png"
+		link="http://people.rennes.inria.fr/Benoit.Baudry/">
+        </event>
+	<event start="Jan 01 2012" title="Benoit Baudry as new team leader"
+		icon="http://www.irisa.fr/triskell/timeline/icons/star.png"
+		link="http://people.rennes.inria.fr/Benoit.Baudry/">
+        </event>
+	
+</data>
