@@ -1,0 +1,537 @@
+<div class="hero-unit editable">
+<h1 align="center">Triskell presentation</h1>
+<h3>Research fields</h3><br/>
+
+<p>In its broad acceptation, Software Engineering consists in proposing practical solutions, founded on scientific knowledge, in order to produce and maintain software with constraints on costs, quality and deadlines. In this field, it is admitted that the complexity of a software increases exponentially with its size. However on the one hand, the size itself of the software is on average multiplied by ten every ten years, and on the other hand, the economic pressure resulted reducing the durations of development, and in increasing the rates of modifications made to the software.<br /><br /></p>
+
+<p>To face these problems, today's mainstream approaches build on the concept of component based software. The assembly of these components makes it possible to build families of products made of many common parts, while remaining opened to new evolutions. As component based systems grow more complex and mission-critical, there is an increased need to be able to represent and reason on such assemblies of components. This is usually done by building models representing various aspects of such a product line, such as for example the functional variations, the structural aspects (object paradigm), of the dynamic aspects (languages of scenarios), without neglecting of course nonfunctional aspects like quality of service (performance, reliability, etc.) described in the form of contracts, or the characteristics of deployment, which become even dominating in the field of reactive systems, which are often distributed and real-time. Model Driven Engineering (MDE) is then a sub-domain of software engineering focusing on reinforcing design, validation and test methodologies based on the automatic processing of multi-dimensional models.</p>
+
+
+<h3>Project-team presentation overview</h3><br /><br />
+
+<p>The research domain of the Triskell project is the model driven development of software product lines. Triskell is particularly interested in component based reactive and large scale distributed systems with quality of service constraints, including reliability, performance, timeliness etc.<br /><br /><br /></p>
+
+<p>Triskell's main objective is to develop model-based methods and tools to help the software designer to efficiently obtain a certain degree of confidence in the reliability of component assemblies that may include third-party components.  This involves, in particular, investigating modeling languages allowing specification of both functional and non-functional aspects for software engineering activities ranging from requirements to detailled design.  It also involves building a continuum of tools which make use of these models, from model validation and verification, automatic application of design patterns, to test environments and on-line monitors supervising the behavior of the components in Dynamically Adaptable Systems. Since these modeling languages and associated tools appear quite open-ended and very domain specific, there is a growing need for <i>tools for building tools for building software</i>.  Triskell is hence developping <a href="http://www.kermeta.org">KerMeta </a>as an original meta modeling approach allowing the user to fully define his modeling languages (including dynamic semantics) and associated environments (including interpreters, compilers, importers/exporters, etc.)  within Eclipse.</p><br /><p>To avoid the pitfall of developping <i>tools for building tools for the sake of it</i>, the Triskell project also has the goal of explicitly connecting its research results to industrial problems through collaborations with industry and technology transfer actions. This implies, in particular, taking into account the industrial standards of the field, namely the Eclipse Modeling Framework (EMF), the OMG's Meta-Object Facility (MOF) and Unified Modeling Language (UML), as well as domain specific component models such as OSGi.</p><br /><br />
+
+
+<h3>Scientific foundations</h3>
+<p>The Triskell project studies new techniques for the reliable construction of
+software product lines, especially for distributed and reactive software. The
+key problems are components modeling and the development of formal manipulation
+tools to refine the design, code generation and test activities. The validation
+techniques used are based on complex simulations of models building on the
+standards in the considered domain.<br />
+<br /></p>
+
+
+<h4>The object-oriented approach to Software Engineering</h4>
+<p><b>keywords :</b> Objects, design patterns, frameworks, software components, UML.</p><br />
+<br />
+<p>The object-oriented approach is now widespread for the analysis, the design,
+and the implementation of software systems. Rooted in the idea of modeling
+(through its origin in Simula), object-oriented analysis, design and
+implementation takes into account the incremental, iterative and evolutive
+nature of software development [<a href="http://www.irisa.fr/triskell/goals.htm#Jackson85"><cite>16</cite></a><cite>, </cite><a href="http://www.irisa.fr/triskell/goals.htm#Booch94"><cite>6</cite></a>]: large software system
+are seldom developed from scratch, and maintenance activities represent a large
+share of the overall development effort.</p><br />
+<br />
+<p>In the object-oriented approach, objects are instances of classes. A class
+encapsulates a single abstraction in a modular way. A class is both <em>closed</em>,
+in the sense that it can be readily instanciated and used by clients objects,
+and <em>open</em>, that is subject to modifications through inheritance [<a href="http://www.irisa.fr/triskell/goals.htm#Meyer87"><cite>22</cite></a>].</p><br />
+<br />
+<p>Since by definition objects are simple to design and understand, complexity in
+an object-oriented system is well known to be in the <em>collaboration</em>
+between objects, and large systems cannot be understood at the level of classes
+and objects. Still these complex collaborations are made of recurring patterns,
+called design patterns. The idea of systematically identifying and documenting design patterns as autonomous
+entities was born in the late 80's. It was brought into the mainstream by such people as
+Beck, Ward, Coplien, Booch, Kerth, Johnson, etc. (known as the Hillside Group).
+However the main event in this emerging field was the publication, in 1995, of the
+book <em>Design Patterns: Elements of Reusable Object Oriented Software</em> by
+the so-called Gang of Four (GoF), that is Erich Gamma, Richard Helm, Ralph
+Johnson and John Vlissides [<a href="http://www.irisa.fr/triskell/goals.htm#Gamma95"><cite>8</cite></a>].
+Today, design patterns are widely accepted as useful tools for guiding
+and documenting the design of object-oriented software systems. Design patterns
+play many roles in the development process. They provide a common vocabulary
+for design, they reduce system complexity by naming and defining abstractions,
+they constitute a base of experience for building reusable software, and they
+act as building blocks from which more complex designs can be built.
+Design patterns can be considered reusable micro-architectures that contribute
+to an overall system architecture. Ideally, they capture the intent behind a
+design by identifying the component objects, their collaborations, and the
+distribution of responsibilities.</p><br />
+<br />
+<p>Frameworks are also closely related to design patterns. An object-oriented
+software framework is made up of a set of related classes which can be
+specialized or instantiated to implement an application. It is a reusable
+software architecture that provides the generic structure and behavior for a
+family of software applications, along with a context which specifies their
+collaboration and use within a given domain [<a href="http://www.irisa.fr/triskell/goals.htm#Appleton97"><cite>1</cite></a>]. A framework
+differs from a complete application in that it lacks the necessary
+application-specific functionality. It can be considered as a prefabricated
+structure, or template, of a working application, where a number of pieces in
+specific places, called <em>plug-points</em> or <em>hot spots</em>, are either not
+implemented or given overridable implementations. To obtain a complete
+application from a framework, one has to provide the missing pieces, usually by
+implementing a number of call-back functions (that is, functions that are
+invoked by the framework) to fill the plug-points. In an object-oriented
+context, this feature is achieved by the dynamic binding: an operation can be
+defined in a library class but implemented in a subclass in the application
+specific code. A developer can thus customize the framework to a particular
+application by subclassing and composing instances of framework
+classes [<a href="http://www.irisa.fr/triskell/goals.htm#Gamma95"><cite>8</cite></a>]. A framework is thus different from a classical class
+library in that the flow of control is usually often bi-directional between the
+application and the framework (see Figure <a href="http://www.irisa.fr/triskell/goals.htm#framework-vs-lib">??</a>). The
+framework is in charge of managing the bulk of the application, and the
+application programmer just provides various bits and pieces. This is similar
+to programming some event driven applications, when the application programmer
+usually has no control over the main control logic of the code.</p><br />
+<br />
+<p>Design patterns can be used to document the collaborations between
+classes in a framework. Conversely, a framework may use several design
+patterns, some of them general purpose, some of them
+domain-specific. Design patterns and frameworks are thus closely
+related, but they do not operate at the same level of abstraction: a
+framework <em>is made of</em> software, whereas design patterns represent
+knowledge, information and experience <em>about</em> software. In this
+respect, frameworks are of a physical nature, while patterns are of a
+logical nature: frameworks are the physical realization of one or more
+software pattern solutions; patterns are the instructions for how to
+implement those solutions.</p><br />
+<br />
+<p>The object notion also provides the bases needed to develop the concept of <em>software component</em>, for which Szyperski's definition [<a href="http://www.irisa.fr/triskell/goals.htm#Szyperski98"><cite>30</cite></a>] is
+now generally accepted, at least in the industry:</p>
+<blockquote>
+    <em>A software component is a unit of composition with contractually
+        specified interfaces and explicit context dependencies only. A software
+        component can be deployed independently and is subject to composition by
+        third party.
+    </em></blockquote><p>Components help reducing costs by allowing reuse of application frameworks and
+components instead of redeveloping applications from scratch (product line
+approach). But more important, components offer the possibility to radically
+change the behaviors and services offered by an application by substitution or
+addition of new components, even a long time after deployment. This has a major
+impact of software lifecycle, which should now handle activities such as:</p><br />
+<br />
+<ul><li>
+    design of component frameworks,
+
+</li><li> design of reusable components as deployment units,
+
+</li><li> validation of component compositions coming from various origins,
+
+</li><li> component life-cycle management
+</li></ul>
+<p>It seems clear that empirical methods without real component composition
+models that have appeared during the emergence of a real component industry (at
+least in the Windows world) are now the cause of untractable validation and
+integration problems can not be transposed to more critical systems (see for
+example the accidental destruction of Ariane 501 [<a href="http://www.irisa.fr/triskell/goals.htm#Jezequel97a"><cite>19</cite></a>]). <br /></p>
+<br />
+<p>Providing solutions for formal component composition models and for verifiable
+quality (notion of <em>trusted components</em>) are especially relevant
+challenges. Also the methodological impact of component-based development (for
+example within the maturity model defined by the sei (cmm model))
+is also worth attention.</p><br />
+<br />
+<p>Central to this trusted component notion is the idea of <em>contract</em>. A
+software contract captures mutual obligations and benefits among stake-holder
+components, for example between the client of a service and its suppliers
+(including subclasses). Contracts strengthen and deepen interface
+specifications. Along the lines of abstract data type theory, a common way of
+specifying software contracts is to use boolean assertions called pre- and
+post-conditions for each service offered, as well as class invariants for
+defining general consistency properties. Then the contract reads as follows:
+the client should only ask a supplier for a service in a state where the class
+invariant and the precondition of the service are respected. In return, the
+supplier promises that the work specified in the postcondition will be done,
+and the class invariant is still respected. In this way rights and obligations
+of both client and supplier are clearly delineated, along with their
+responsibilities. This idea was first implemented in the Eiffel
+language [<a href="http://www.irisa.fr/triskell/goals.htm#Meyer92b"><cite>23</cite></a>] under the name <em>Design by Contract</em>, and is now
+available with a range of expressive power into several other programming
+languages (such as Java) and even in the Unified Modeling Language (UML) with
+the Object Constraint Language (OCL) [<a href="http://www.irisa.fr/triskell/goals.htm#Warmer98"><cite>32</cite></a>].</p><br />
+<br />
+<p>Some prototypes in laboratories provide answers to these problems, but
+the massive adoption of UML in many industrial domains open new perspectives to
+make the underlying ideas evolve, scale up, and hence become
+profitable. Unlike its predecessors, (omt, Booch, etc.), that only
+proposed a graphical syntax, UML is partially formalized by a meta-model
+(expressed itself as a UML model) and contains a very sophisticated constraint
+language called OCL (<em>Object Constraint Language</em>), that can be used
+indifferently at the model level or at the meta-model level. All this makes it possible to
+consider formal manipulations of models that capture many
+aspects of software, both from the technical side, (with the four UML main
+dimensions : data, functional, dynamic, and deployment) and on the process
+side, ranging from the expression of requirements and the analysis to design
+(framework models and design patterns) and test implantation. </p><br />
+<br />
+
+
+<h4>Mathematical foundations of distributed software</h4>
+<p><b>keywords :</b> Labelled Transition Systems, Partial orders.</p><br />
+<br />
+<p>Labelled transitions systems are the mathematical structure that characterizes
+best the foundations of research on software models. This structure was
+developed 50 years ago. However, models of real systems can be very large, and
+it is not always possible to build the complete model before performing a
+formal manipulation. In some cases, it is possible to apply lazy construction
+methods (also called on the fly). Concurrency is another fundamental aspect
+that must be considered by models. This is the central concept needed for the
+analysis of distributed systems.</p><br />
+<br />
+
+
+<h5> Labelled Transition Systems</h5>
+<p>A lts is a directed graph which edges are labelled by letters
+representing events. A finite state automaton designates a LTS which set of
+states and edges is finite. This model is the simplest way known to represent
+behaviors of reactive systems. </p><br />
+<br />
+<p>Transition systems can be obtained from specifications of systems described
+with high-level languages such as UML. This is done through a definition of an operational semantics of the
+language, which is usually formalized as a set of deduction rules. For simple
+languages such as process algebras, this operational semantics can be defined
+with a dozen of rules. For a complex language like UML, the definition of rules
+can take hundreds of pages. </p><br />
+<br />
+<p>For performance reasons, the operational semantics rules are never used as
+such, and some simplifications such as state encoding help saving some
+space. Usually, algorithms inherited from language theory are based on an
+explicit construction of a transition system. However, for the class of
+problems that are considered within the Triskell project, and exhaustive
+representation of the LTS is not always needed, and a lazy construction method
+can be used: the only part of the specification needed for the algorithm is
+computed. Similarly, some parts of a LTS under construction can be
+``forgotten'', hence saving memory. The combination of these strategies allows
+the study of real size specifications with reasonable resources.</p><br />
+<br />
+
+
+<h5> Non interleaved models</h5>
+<p>One of the main drawbacks of interleaved models is that concurrency is
+represented by means of interleavings. Hence, it is sometimes impossible to
+differentiate concurrency and branching in a specification. Furthermore,
+representing all possible interleavings of some behaviors is not always
+necessary to check a given property, and needs a lot of memory space. Partial
+order models bring a solution to this problem. They can represent concurrency
+in a more intuitive way: two concurrent events are not causally related. </p><br />
+<br />
+<p>Several partial order models are frequently used: Petri nets, Pom-sets, event
+structures, ... It is possible to get back to a transition system
+representation of a finite partial order representation by considering marking
+graphs for Petri nets,
+linearisations of Pom-sets, or configurations of event structures.
+Within the project, partial orders are seen as the most natural way for
+providing a semantics to scenarios (MSC, UML sequence diagrams,...). </p><br />
+<br />
+
+
+<h3>Application domains</h3>
+
+
+<h4>Software for telecommunication</h4>
+<p><b>keywords : </b>
+telecommunication, software engineering, test, UML<br />
+<br />
+The telecommunication world is evolving rapidly. New worldwide
+infrastructures connecting multiple components are settling. Mobile
+communications is also a growing sector and new services are constantly
+developed. </p><br />
+<br />
+<p>On the software point of view, building a new application from scratch is no
+longer possible. There is a real need for flexible solutions allowing to deal at
+the same time with a wide range of needs (product lines modeling and
+methodologies for managing them), while reducing the time to market (such as
+derivation and validation tools). </p><br />
+<br />
+<p>The Triskell project has gained experience in model engineering, and finds here
+a propitious domain. The increasing software complexity and the
+reliability and reusability requirements fully justify the methods developed
+by our project. The main themes studied are reliable software components
+composition, UML-based developments validation, and test generation from
+UML models. </p><br />
+<br />
+<p>The research activity in Triskell focuses at the same time on development
+efficiency and reliability. The main applications of this research is clearly
+related to the telecommunication domain, and mainly concern reliable
+construction of communication software, and object oriented systems testing. <br />
+<br />
+Reliability is an essential requirement in a context where a huge number of
+softwares (and sometimes several versions of the same program) may coexist in a
+big telecommunication network. On one hand, software should be able to evolve
+very fast, as new features or services are frequently added to existing ones,
+but on the other hand, the occurrence of a fault in a system can be
+very costly, and time consuming. A lot of attention should then be paid to
+interoperability, i.e. the ability for software to work properly with other. We
+think that formal methods may help solving this kind of problems.
+Note that formal methods should be more and more integrated in an approach
+allowing system designer to build software globally, in order to take into
+account constraints and objectives coming from user requirements. These
+methodologies are in their early years. A good example of such techniques is
+the object oriented approach, which is becoming more popular in the
+telecommunication world.<br />
+<br />
+Software testing is another aspect of reliable development. Testing activities
+mainly consist in ensuring that a system implementation conforms to its
+specifications. Whatever the efforts spent for development, this phase is of
+real importance to ensure that a system behaves properly in a complex
+environment.<br /></p>
+<br /><h2>References</h2>
+<dl compact="compact"><dt><a name="Appleton97">[1]</a></dt><dd>
+    Brad Appleton.
+    Patterns and software: Essential concepts and terminology.
+    <em>Object Magazine Online</em>, May 1997.<br />
+    <br />
+
+</dd><dt><a name="Baudry01a">[2]</a></dt><dd>
+    <a href="http://www.irisa.fr/triskell/publis/2001/Baudry01a.pdf">[PDF]</a>
+    B. Baudry, Y. LeTraon, and J.-M. Jézéquel.
+    Robustness and diagnosability of oo systems designed by contracts.
+    In <em>Proceedings of Metrics'01</em>, London, UK, April 2001.<br />
+    <br />
+
+</dd><dt><a name="Baudry02a">[3]</a></dt><dd>
+    <a href="http://www.irisa.fr/triskell/publis/2002/Baudry02a.pdf">[PDF]</a>
+    B. Baudry, Y. Le Traon, and G. Sunyé.
+    Testability analysis of UML class diagram.
+    In <em>Proceedings of Metrics02</em>, pages 54--63, Ottawa, Canada, June
+    2002.<br />
+    <br />
+
+</dd><dt><a name="Baudry02b">[4]</a></dt><dd>
+    <a href="http://www.irisa.fr/triskell/publis/2002/Baudry02b.pdf">[PDF]</a>
+    Benoit Baudry, Franck Fleurey, Jean-Marc Jézéquel, and Yves Le Traon.
+    Genes and bacteria for automatic test cases optimization in the .net
+    environment.
+    In <em>Proceedings of ISSRE02 (International Symposium on Software
+    Reliability Engineering)</em>, pages 195--206, Annapolis, USA, November 2002.<br />
+    <br />
+
+</dd><dt><a name="Beugnard99">[5]</a></dt><dd>
+    <a href="http://www.irisa.fr/triskell/publis/1999/Beugnard99.pdf">[PDF]</a>
+    A. Beugnard, J.-M. Jézéquel, N. Plouzeau, and D. Watkins.
+    Making components contract aware.
+    <em>IEEE Computer</em>, 13(7), July 1999.<br />
+    <br />
+
+</dd><dt><a name="Booch94">[6]</a></dt><dd>
+    Grady Booch.
+    <em>Object-Oriented Analysis and Design with Applications</em>.
+    Benjamin Cummings, 2nd edition, 1994.<br />
+    <br />
+
+</dd><dt><a name="Jard02a">[7]</a></dt><dd>
+    <a href="http://www.irisa.fr/triskell/publis/2002/Jard02a.pdf">[PDF]</a>
+    C.Jard.
+    Synthesis of distributed testers from true-concurrency models of
+    reactive systems.
+    <em>Journal of Information and Software Technology</em>, 2002.
+    To appear.<br />
+    <br />
+
+</dd><dt><a name="Gamma95">[8]</a></dt><dd>
+    Erich Gamma, Richard Helm, Ralph Johnson, and John Vlissides.
+    <em>Design Patterns: Elements of Reusable Object-Oriented Software</em>.
+    Addison Wesley, 1995.<br />
+    <br />
+
+</dd><dt><a name="LeGuennec01a">[9]</a></dt><dd>
+    <a href="http://www.irisa.fr/triskell/publis/2001/LeGuennec01a.pdf">[PDF]</a>
+    Alain Le Guennec.
+    <em>Génie Logiciel et Méthodes Formelles avec </em><em>UML</em><em> : Spécification,
+    Validation et Génération de tests</em>.
+    PhD thesis, École doctorale MATISSE, Universite de Rennes 1, June
+    2001.<br />
+    <br />
+
+</dd><dt><a name="LeGuennec00a">[10]</a></dt><dd>
+    <a href="http://www.irisa.fr/triskell/publis/2000/LeGuennec00a.pdf">[PDF]</a>
+    Alain Le Guennec, Gerson Sunyé, and Jean-Marc Jézéquel.
+    Precise modeling of design patterns.
+    In <em>Proceedings of </em><em>UML</em><em> 2000</em>, volume 1939 of <em>LNCS</em>, pages
+    482--496. Springer Verlag, 2000.<br />
+    <br />
+
+</dd><dt><a name="Hanh02a">[11]</a></dt><dd>
+    Vu Le Hanh.
+    <em>test et modèle </em><em>UML</em><em> : stratégie, plan et synthèse de test</em>.
+    PhD thesis, Ecole doctorale MATISSE, Universite de Rennes 1, November
+    2002.<br />
+    <br />
+
+</dd><dt><a name="Helouet03a">[12]</a></dt><dd>
+    Loïc Hélouët.
+    Projections et comparaisons de scénarios.
+    In <em>Proc of AFADL'2003, Approches Formelles dans l'Assistance au
+    Développement de Logiciels</em>, Rennes, France, Jan. 2003.<br />
+    <br />
+
+</dd><dt><a name="Ho01a">[13]</a></dt><dd>
+    <a href="http://www.irisa.fr/triskell/publis/2001/Ho01a.pdf">[PDF]</a>
+    Wai Ming Ho.
+    <em>Contribution à la Réification d'un Processus de Conception</em>.
+    PhD thesis, Ecole doctorale MATISSE, Universite de Rennes 1,
+    September 2001.<br />
+    <br />
+
+</dd><dt><a name="Ho02a">[14]</a></dt><dd>
+    <a href="http://www.irisa.fr/triskell/publis/2002/Ho02a.pdf">[PDF]</a>
+    W.M. Ho, J.-M. Jézéquel, F. Pennaneac'h, and N. Plouzeau.
+    A toolkit for weaving aspect oriented UML designs.
+    In <em>Proceedings of 1st ACM International Conference on Aspect
+    Oriented Software Development, AOSD 2002</em>, Enschede, The Netherlands, April
+    2002.<br />
+    <br />
+
+</dd><dt><a name="Ho00">[15]</a></dt><dd>
+    W.M. Ho, F. Pennaneac'h, and N. Plouzeau.
+    Umlaut: A framework for weaving UML-based aspect-oriented designs.
+    In <em>Technology of object-oriented languages and systems (TOOLS
+    Europe)</em>, volume 33, pages 324--334. IEEE Computer Society, June 2000.<br />
+    <br />
+
+</dd><dt><a name="Jackson85">[16]</a></dt><dd>
+    M.A. Jackson.
+    <em>System Development</em>.
+    Prentice-Hall International, Series in Computer Science, 1985.<br />
+    <br />
+
+</dd><dt><a name="Jard02b">[17]</a></dt><dd>
+    <a href="http://www.irisa.fr/triskell/publis/2002/Jard02b.pdf">[PDF]</a>
+    C. Jard.
+    Principles of distributed test synthesis based on true-concurrency
+    models.
+    In <em>TESTCOM'2002 : Testing Communicating Systems</em>, Berlin,
+    Germany, March 2002.<br />
+    <br />
+
+</dd><dt><a name="Jezequel01b">[18]</a></dt><dd>
+    J.-M. Jézéquel, D. Deveaux, and Y. LeTraon.
+    Reliable objects: a lightweight approach applied to java.
+    <em>IEEE Software</em>, 18(4):76--83, July/August 2001.<br />
+    <br />
+
+</dd><dt><a name="Jezequel97a">[19]</a></dt><dd>
+    J.-M. Jézéquel and B. Meyer.
+    Design by contract: The lessons of Ariane.
+    <em>Computer</em>, 30(1):129--130, January 1997.<br />
+    <br />
+
+</dd><dt><a name="Jezequel99">[20]</a></dt><dd>
+    J.-M. Jézéquel, M. Train, and C. Mingins.
+    <em>D</em><em>esign </em><em>P</em><em>atterns and </em><em>Contracts</em>.
+    Addison-Wesley, October 1999.
+    ISBN 1-201-30959-9.<br />
+    <br />
+
+</dd><dt><a name="Hanh01a">[21]</a></dt><dd>
+    <a href="http://www.irisa.fr/triskell/publis/2001/Hanh01a.pdf">[PDF]</a>
+    Hanh Vu Le, Akif Kamel, Yves Le Traon, and Jean-Marc Jézéquel.
+    Selecting an efficient OO integration testing strategy: An
+    experimental comparison of actual strategies.
+    In J. L. Knudsen, editor, <em>Proceedings of ECOOP2001</em>, volume 2072
+    of <em>LNCS</em>, pages 381--400, Budapest, Hungary, June 2001. Springer.<br />
+    <br />
+
+</dd><dt><a name="Meyer87">[22]</a></dt><dd>
+    B. Meyer.
+    Reusability: The Case for Object-Oriented Design.
+    <em>IEEE SOFTWARE</em>, (3):50--64, March 1987.<br />
+    <br />
+
+</dd><dt><a name="Meyer92b">[23]</a></dt><dd>
+    B. Meyer.
+    Applying "design by contract".
+    <em>IEEE Computer (Special Issue on Inheritance &amp; Classification)</em>,
+    25(10):40--52, October 1992.<br />
+    <br />
+
+</dd><dt><a name="Pennaneach01a">[24]</a></dt><dd>
+    <a href="http://www.irisa.fr/triskell/publis/2001/Pennaneach01a.pdf">[PDF]</a>
+    F. Pennaneac'h, J.-M. Jézéquel, J. Malenfant, and G. Sunyé.
+    UML reflections.
+    In <em>Proc. of Reflection 2001</em>, September 2001.<br />
+    <br />
+
+</dd><dt><a name="Pickin01a">[25]</a></dt><dd>
+    <a href="http://www.irisa.fr/triskell/publis/2001/Pickin01a.pdf">[PDF]</a>
+    S. Pickin, C. Jard, T. Heuillard, J.-M. Jézéquel, and P. Desfray.
+    A UML-integrated test description language for component testing.
+    In <em>Proceedings </em><em>UML</em><em>2001 wkshp: Practical </em><em>UML</em><em>-Based Rigorous
+    Development Methods</em>, GI-Edition - Lecture Notes in Informatics (LNI). Bonner
+    Köllen Verlag, October 2001.<br />
+    <br />
+
+</dd><dt><a name="Pickin02a">[26]</a></dt><dd>
+    <a href="http://www.irisa.fr/triskell/publis/2002/Pickin02a.pdf">[PDF]</a>
+    S. Pickin, C. Jard, Y. Le Traon, T. Jéron, J.-M. Jézéquel, and A. Le Guennec.
+    System test synthesis from UML models of distributed software.
+    In D. Peled and M. Vardi, editors, <em>Formal Techniques for
+    Networked and Distributed Systems - FORTE 2002</em>, LNCS, Houston, Texas,
+    November 2002.<br />
+    <br />
+
+</dd><dt><a name="Sunye02a">[27]</a></dt><dd>
+    G. Sunyé, A. LeGuennec, and J.-M. Jézéquel.
+    Using UML action semantics for model execution and transformation.
+    <em>Information Systems, Elsevier</em>, 27(6):445--457, July 2002.<br />
+    <br />
+
+</dd><dt><a name="Sunye00a">[28]</a></dt><dd>
+    <a href="http://www.irisa.fr/triskell/publis/2000/Sunye00a.pdf">[PDF]</a>
+    G. Sunyé, A. Le Guennec, and J.-M. Jézéquel.
+    Design pattern application in UML.
+    In E. Bertino, editor, <em>ECOOP'2000 proceedings</em>, number 1850 in
+    LNCS, pages 44--62. Springer Verlag, June 2000.<br />
+    <br />
+
+</dd><dt><a name="Sunye01a">[29]</a></dt><dd>
+    <a href="http://www.irisa.fr/triskell/publis/2001/Sunye01a.pdf">[PDF]</a>
+    Gerson Sunyé, François Pennaneac'h, Wai-Ming Ho, Alain Le Guennec, and
+    Jean-Marc Jézéquel.
+    Using UML Action Semantics for executable modeling and beyond.
+    In Klaus R. Dittrich, Andreas Geppert, and Moira C. Norrie, editors,
+    <em>Advanced Information Systems Engineering --- CAiSE 2001</em>, volume 2068 of
+    <em>LNCS</em>, pages 433--447, Interlaken, Switzerland, June 2001. Springer.<br />
+    <br />
+
+</dd><dt><a name="Szyperski98">[30]</a></dt><dd>
+    Clemens Szyperski.
+    <em>Component Software: Beyond Object-Oriented Programming</em>.
+    ACM Press and Addison-Wesley, New York, N.Y., 1998.<br />
+    <br />
+
+</dd><dt><a name="LeTraon00a">[31]</a></dt><dd>
+    Yves Le Traon, Thierry Jéron, Jean-Marc Jézéquel, and Pierre Morel.
+    Efficient OO integration and regression testing.
+    <em>IEEE Trans. on Reliability</em>, 49(1):12--25, March 2000.<br />
+    <br />
+
+</dd><dt><a name="Warmer98">[32]</a></dt><dd>
+    Jos Warmer and Anneke Kleppe.
+    <em>The Object Constraint Language</em>.
+    Addison-Wesley, 1998.<br />
+    <br />
+
+</dd><dt><a name="Weis02a">[33]</a></dt><dd>
+    T. Weis, N. Plouzeau, K. Geihs, A.-M. Sassen, and J.-M. Jézéquel.
+    <em>New Advances on CBSE</em>, chapter QCCS: Quality Controlled
+    Component-based Software development.
+    Kluwer Academic Pusblishers, 2002.<br />
+    <br />
+
+</dd><dt><a name="Weis01a">[34]</a></dt><dd>
+    Torben Weis, Christian Becker, Kurt Geihs, and Noël Plouzeau.
+    An UML meta model for contract aware components.
+    In <em>Proceedings of </em><em>UML</em><em> 2001</em>, volume 2185 of <em>LNCS</em>, pages
+    442--456. Springer Verlag, 2001.</dd></dl>
+
+<p align="left"> </p>
+<p align="left"> </p>
+</div>
+
+
+

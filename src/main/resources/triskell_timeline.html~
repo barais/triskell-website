@@ -1,0 +1,79 @@
+
+ <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+ <html>
+   <head>
+     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+	 <link rel='stylesheet' href='styles.css' type='text/css' />
+     <script>
+      Timeline_ajax_url="/timeline_2.3.1/timeline_ajax/simile-ajax-api.js";
+      Timeline_urlPrefix='/timeline_2.3.1/timeline_js/';       
+      Timeline_parameters='bundle=true';
+    </script>
+    <script src="/timeline_2.3.1/timeline_js/timeline-api.js"    
+      type="text/javascript">
+    </script>
+     
+	<script> 
+	  var tl;
+ function onLoad() {
+   var contractsEventSource = new Timeline.DefaultEventSource();
+   var teamEventSource = new Timeline.DefaultEventSource();
+   var bandInfos = [
+     Timeline.createBandInfo({
+         eventSource:    teamEventSource,
+         date:           "Jan 1 2011 00:00:00 GMT",
+         width:          "12%", 
+		 magnify:  20,
+         intervalUnit:   Timeline.DateTime.YEAR, 
+         intervalPixels: 100
+     }),
+	 Timeline.createBandInfo({
+         eventSource:    contractsEventSource,
+         date:           "Jan 1 2011 00:00:00 GMT",
+         width:          "78%", 
+		 magnify:  20,
+         intervalUnit:   Timeline.DateTime.YEAR, 
+         intervalPixels: 100
+     }),
+     Timeline.createBandInfo({
+         overview:       true,
+         eventSource:    contractsEventSource,
+         date:           "Jan 1 2011 00:00:00 GMT",
+         width:          "10%", 
+		 magnify:  3,
+         intervalUnit:   Timeline.DateTime.YEAR, 
+         intervalPixels: 50
+     })
+   ];
+   bandInfos[1].syncWith = 0;
+   bandInfos[2].syncWith = 0;
+   bandInfos[2].highlight = true;
+   
+   tl = Timeline.create(document.getElementById("my-timeline"), bandInfos);
+   Timeline.loadXML("triskell_contracts_timeline.xml", function(xml, url) { contractsEventSource.loadXML(xml, url); });
+   Timeline.loadXML("triskell_team_timeline.xml", function(xml, url) { teamEventSource.loadXML(xml, url); });
+
+
+ }
+
+ var resizeTimerID = null;
+ function onResize() {
+     if (resizeTimerID == null) {
+         resizeTimerID = window.setTimeout(function() {
+             resizeTimerID = null;
+             tl.layout();
+         }, 500);
+     }
+ }
+	 </script>
+	 
+   </head>
+   <body  onload="onLoad();" onresize="onResize();">
+    
+	
+	<div id="my-timeline" style="height: 700px; border: 1px solid #aaa"></div>
+	<noscript>
+	This page uses Javascript to show you a Timeline. Please enable Javascript in your browser to see the full page. Thank you.
+	</noscript>
+   </body>
+ </html>
