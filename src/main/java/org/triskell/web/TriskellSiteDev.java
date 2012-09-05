@@ -73,16 +73,18 @@ public class TriskellSiteDev extends ParentAbstractPage {
     @Override
     public KevoreeHttpResponse process(KevoreeHttpRequest request, KevoreeHttpResponse response) {
 
+        System.out.println("should save " + request.getUrl());
+
         if (request.getUrl() != null && request.getUrl().startsWith("/TestEditor/saveContent/")){
             //System.err.println(request.getResolvedParams().get("htmlEditor"));
             try{
                 //System.out.println(request.getUrl().split("/")[3]);
                 if (isPortBinded("createRepo")){
+                    System.out.println("should save " + request.getUrl());
                     String[] splits =  request.getUrl().split("/");
-                    fs.saveFile("src/main/resources/templates/html/"+splits[splits.length-1],request.getResolvedParams().get("htmlEditor").getBytes());
+                    fs.saveFile("/src/main/resources/templates/html/"+splits[splits.length-1],request.getResolvedParams().get("htmlEditor").getBytes());
                 }
             }catch (Exception e){
-
                 e.printStackTrace();
                 return response;
             }
@@ -90,8 +92,15 @@ public class TriskellSiteDev extends ParentAbstractPage {
         return response;
 
         }
-
-        if (FileServiceHelper.checkStaticFileFromDir(basePage, this, request, response, f.getAbsolutePath())) {
+        File f1=null;
+        if (isPortBinded("createRepo")){
+            f1=new File(fs.getAbsolutePath("/src/main/resources/"));
+            //System.out.println("path = " +f1);
+        }else{
+           f1=f;
+        }
+        //System.out.println("path = " +f1);
+        if (FileServiceHelper.checkStaticFileFromDir(basePage, this, request, response, f1.getAbsolutePath())) {
             if (request.getUrl().equals("/") || request.getUrl().endsWith(".html") || request.getUrl().endsWith(".css")) {
                 String pattern = getDictionary().get("urlpattern").toString();
                 if (pattern.endsWith("**")) {
