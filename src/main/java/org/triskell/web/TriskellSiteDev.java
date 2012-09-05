@@ -3,6 +3,7 @@ package org.triskell.web;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Node;
 import org.jsoup.select.Elements;
 import org.kevoree.annotation.*;
 import org.kevoree.library.javase.fileSystem.api.FileService;
@@ -13,6 +14,7 @@ import org.kevoree.library.javase.webserver.ParentAbstractPage;
 import org.triskell.web.PageRenderer;
 
 import java.io.File;
+import java.util.Iterator;
 
 /**
  * Created by IntelliJ IDEA.
@@ -76,7 +78,6 @@ public class TriskellSiteDev extends ParentAbstractPage {
     @Override
     public KevoreeHttpResponse process(KevoreeHttpRequest request, KevoreeHttpResponse response) {
 
-        System.out.println("should save " + request.getUrl());
 
         if (request.getUrl() != null && request.getUrl().startsWith("/TestEditor/saveContent/")){
             //System.err.println(request.getResolvedParams().get("htmlEditor"));
@@ -85,13 +86,41 @@ public class TriskellSiteDev extends ParentAbstractPage {
                 if (isPortBinded("createRepo")){
                     System.out.println("should save " + request.getUrl());
                     String[] splits =  request.getUrl().split("/");
-                    String html = "<html><head><title>First parse</title></head>"
-                            + "<body><p>Parsed HTML into a doc.</p></body></html>";
+                    String html = request.getResolvedParams().get("htmlEditor");
                     Document doc = Jsoup.parse(html);
                     //Elements newsHeadlines = doc.select("#mp-itn b a");
-                    Elements notEditable = doc.select("#noteditable");
+                    Elements twitter = doc.select("div#twitter");
+                    Document doc1 = Jsoup.parseBodyFragment("<div id=\"twitter\" class=\"span4 noteditable\">" +
+                            "<h1>Twitter</h1>" +
+                            "<p class=\"before-twitter\">Latest <a href=\"https://twitter.com/#!/triskell-team\">@Triskell</a> buzz:</p>" +
+                            "<div id=\"tweets\" class=\"tweets\"></div></div>");
 
-                    fs.saveFile("/src/main/resources/templates/html/"+splits[splits.length-1],request.getResolvedParams().get("htmlEditor").getBytes());
+                    if (twitter.size()>0){
+
+                        Node twitter1 = doc1.select("#twitter").first();
+                      twitter.first().replaceWith(twitter1);
+                    }
+                    Elements scriptalohaeditor   = doc.select("#scriptalohaeditor");
+                    scriptalohaeditor.first().remove();
+                    Elements conatainer   = doc.select("div.container");
+
+                    Elements links = doc.select("a[href^=/]"); // a with href
+                    for (Node e: links)
+                        {
+                        e.attr("href",e.attr("href").replaceFirst("/","{urlpattern}"));
+                    }
+                    Elements imgs = doc.select("img[src^=/]");
+                    for (Node e: imgs)
+                    {
+                        e.attr("src",e.attr("src").replaceFirst("/","{urlpattern}"));
+                    }
+
+
+
+                    System.out.println("should save " + conatainer.html());
+
+
+                    fs.saveFile("/src/main/resources/templates/html/" + splits[splits.length - 1], doc.html().getBytes());
                 }
             }catch (Exception e){
                 e.printStackTrace();
