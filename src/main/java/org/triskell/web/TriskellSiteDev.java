@@ -1,6 +1,9 @@
 package org.triskell.web;
 
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.select.Elements;
 import org.kevoree.annotation.*;
 import org.kevoree.library.javase.fileSystem.api.FileService;
 import org.kevoree.library.javase.webserver.FileServiceHelper;
@@ -82,6 +85,12 @@ public class TriskellSiteDev extends ParentAbstractPage {
                 if (isPortBinded("createRepo")){
                     System.out.println("should save " + request.getUrl());
                     String[] splits =  request.getUrl().split("/");
+                    String html = "<html><head><title>First parse</title></head>"
+                            + "<body><p>Parsed HTML into a doc.</p></body></html>";
+                    Document doc = Jsoup.parse(html);
+                    //Elements newsHeadlines = doc.select("#mp-itn b a");
+                    Elements notEditable = doc.select("#noteditable");
+
                     fs.saveFile("/src/main/resources/templates/html/"+splits[splits.length-1],request.getResolvedParams().get("htmlEditor").getBytes());
                 }
             }catch (Exception e){
