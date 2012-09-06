@@ -13,14 +13,13 @@ import org.kevoree.library.javase.webserver.{URLHandlerScala, AbstractPage, Kevo
  * Time: 17:15
  */
 
-class PageRenderer(devmod: Boolean, folder: java.io.File, fs: FileService) {
+class PageRenderer(devmod: Boolean, folder: java.io.File, fs: FileService, edit:Boolean) {
 
   val handler = new URLHandlerScala()
 
   def checkForTemplateRequest(index: String, origin: AbstractPage, request: KevoreeHttpRequest, response: KevoreeHttpResponse): Boolean = {
     val urlPattern = origin.getDictionary.get("urlpattern").toString
 
-    println("URL = " +  request.getUrl + " "+ request.getCompleteUrl)
     handler.getLastParam(request.getUrl, urlPattern) match {
       case Some(reqP) => {
         if (reqP == "" || reqP == null || reqP == "/") {
@@ -42,7 +41,6 @@ class PageRenderer(devmod: Boolean, folder: java.io.File, fs: FileService) {
             } else {
               reqP
             }
-            println(cleanupRequest + "==" + cleanupRep)
 
             cleanupRequest == (cleanupRep)
           }) match {
@@ -69,9 +67,12 @@ class PageRenderer(devmod: Boolean, folder: java.io.File, fs: FileService) {
     sb.append("<div class=\"wrapper\">")
     sb.append("<div class=\"container\">")
     sb.append(replaceVariable(renderHtml(name), vars))
-    sb.append("<div id=\"scriptalohaeditor\">")
-    sb.append(this.replaceVariable(footerScriptPage(name), vars))
-    sb.append("</div>")
+
+    if (edit){
+      sb.append("<div id=\"scriptalohaeditor\">")
+      sb.append(this.replaceVariable(footerScriptPage(name), vars))
+      sb.append("</div>")
+    }
     sb.append("</div>")
     sb.append("<div class=\"push\"><!--//--></div>")
     sb.append("</div>")
@@ -94,11 +95,9 @@ class PageRenderer(devmod: Boolean, folder: java.io.File, fs: FileService) {
 
     var st: InputStream = null
     if (fs != null){
-       println("pass par la")
        return new String(fs.getFileContent( "src/main/resources/templates/html/" + name ))
     } else{
      if (devmod)  {
-       println("pass par la1")
         st = new FileInputStream(new File(folder.getAbsolutePath + java.io.File.separator + "templates" + java.io.File.separator + "html" + java.io.File.separator + name))
     }else
         st = getClass.getClassLoader.getResourceAsStream("templates/html/" + name)
@@ -233,18 +232,18 @@ class PageRenderer(devmod: Boolean, folder: java.io.File, fs: FileService) {
     v.append("if(obj.readyState == 4)              \n")
       v.append("{                                     \n")
       v.append(" if(obj.status == 200)                   \n")
-      v.append(" {alert(\"Received:\" + obj.responseText); \n")
-     // v.append("   document.ajax.dyn.value=\"Received:\" + obj.responseText;\n")
-    v.append("  } \n")
+      v.append(" {\n");
+      //  "alert(\"Received:\" + obj.responseText); \n")
+      // v.append("   document.ajax.dyn.value=\"Received:\" + obj.responseText;\n")
+      v.append("  } \n")
       v.append("   else \n")
    //   v.append("  {         \n")
         v.append(" {alert(\"Received:\" + obj.statusText); \n")
-
         //v.append("    document.ajax.dyn.value=\"Error: returned status code \" + \n")
     //v.append("      obj.status + \" \" + obj.statusText;                       \n")
-    v.append("  }              \n")
-      v.append("  }               \n")
-      v.append("};                   \n")
+    v.append("  }\n")
+      v.append("  }\n")
+      v.append("};\n")
     v.append("obj.open(\"POST\", url, true);                        \n")
       v.append("obj.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');\n")
       v.append("if (content != null){   \n")

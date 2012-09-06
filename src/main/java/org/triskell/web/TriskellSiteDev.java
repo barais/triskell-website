@@ -20,17 +20,13 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadPoolExecutor;
 
-/**
- * Created by IntelliJ IDEA.
- * User: duke
- * Date: 27/03/12
- * Time: 11:12
- */
 
 @ComponentType
 //@DictionaryType()
 @DictionaryType({
-        @DictionaryAttribute(name = "folder")})
+        @DictionaryAttribute(name = "folder"),
+        @DictionaryAttribute(name = "siteType",defaultValue = "edit") /*edit or prod*/
+})
 
 @Requires({
         @RequiredPort(name = "createRepo", type= PortType.SERVICE, className = FileService.class,optional = true,needCheckDependency = true)
@@ -40,7 +36,6 @@ import java.util.concurrent.ThreadPoolExecutor;
 public class TriskellSiteDev extends ParentAbstractPage {
 
     protected String basePage = "overview.html";
-
     protected ExecutorService executor;
     private File f;
     private PageRenderer krenderer = null;
@@ -52,23 +47,17 @@ public class TriskellSiteDev extends ParentAbstractPage {
     public void startPage() {
         super.startPage();
         executor = Executors.newSingleThreadExecutor();
-
         File f1 = new File((String) super.getDictionary().get("folder"));
-
         fs = this.getPortByName("createRepo",FileService.class);
-
-            if (isPortBinded("createRepo")){
+           if (isPortBinded("createRepo")){
                 f=new File(fs.getAbsolutePath("/src/main/resources/"));
-                krenderer = new PageRenderer(true,f,fs);
-
+                krenderer = new PageRenderer(true,f,fs, super.getDictionary().get("siteType").equals("edit"));
             }
                 else{
                 if (f1.isDirectory())
                     f=f1;
-                krenderer = new PageRenderer(true,f,null);
+                krenderer = new PageRenderer(true,f,null,super.getDictionary().get("siteType").equals("edit"));
             }
-
-
     }
 
     @Override
@@ -90,10 +79,8 @@ public class TriskellSiteDev extends ParentAbstractPage {
 
     @Override
     public KevoreeHttpResponse process(KevoreeHttpRequest request, KevoreeHttpResponse response) {
-        System.out.println("pass par la4" +request.getUrl());
 
         if (request.getUrl() != null && request.getUrl().startsWith("/TestEditor/saveContent/")){
-            System.out.println("pass par la2" +request.getUrl());
 
             try{
                 if (isPortBinded("createRepo")){
@@ -111,7 +98,13 @@ public class TriskellSiteDev extends ParentAbstractPage {
                     }
                     Elements scriptalohaeditor   = doc.select("#scriptalohaeditor");
 
-                    scriptalohaeditor.first().remove();
+
+                    try{
+                        scriptalohaeditor.first().remove();
+                    }catch (NullPointerException e){
+                        logger.error("pas de balise scriptalohaeditor");
+                    }
+
                     final Elements conatainer   = doc.select("div.container");
 
                     Elements links = doc.select("a[href^=/]"); // a with href
@@ -120,11 +113,20 @@ public class TriskellSiteDev extends ParentAbstractPage {
                         e.attr("href",e.attr("href").replaceFirst("/","{urlpattern}"));
                     }
                     Elements imgs = doc.select("img[src^=/]");
+
+
                     for (Node e: imgs)
                     {
                         e.attr("src",e.attr("src").replaceFirst("/","{urlpattern}"));
                     }
-                     executor.execute(new Runnable() {
+                    Elements contenteditable = doc.select("[contenteditable]");
+                    for (Node e: contenteditable)
+                    {
+                        e.removeAttr("contenteditable");
+
+                    }
+
+                    executor.execute(new Runnable() {
                          @Override
                          public void run() {
                              fs.saveFile("/src/main/resources/templates/html/" + splits[splits.length - 1], conatainer.html().getBytes());
@@ -141,18 +143,9 @@ public class TriskellSiteDev extends ParentAbstractPage {
             return response;
 
         }
-        System.out.println("pass par la3" +request.getUrl());
-
-
-
         if (krenderer.checkForTemplateRequest(basePage, this, request, response)) {
-            System.out.println("pass par la" +request.getUrl());
-
             return response;
         }
-        System.out.println("pass par la5" +request.getUrl());
-
-
         if (FileServiceHelper.checkStaticFileFromDir(basePage, this, request, response, f.getAbsolutePath())) {
 
             if (request.getUrl().equals("/") || request.getUrl().endsWith(".html") || request.getUrl().endsWith(".css")) {
@@ -167,9 +160,6 @@ public class TriskellSiteDev extends ParentAbstractPage {
             }
             return response;
         }
-        System.out.println("pass par la6" +request.getUrl());
-
-
         response.setContent("Bad request");
         return response;
     }
