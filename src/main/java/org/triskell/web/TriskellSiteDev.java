@@ -15,6 +15,10 @@ import org.triskell.web.PageRenderer;
 
 import java.io.File;
 import java.util.Iterator;
+import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadPoolExecutor;
 
 /**
  * Created by IntelliJ IDEA.
@@ -29,7 +33,7 @@ import java.util.Iterator;
         @DictionaryAttribute(name = "folder")})
 
 @Requires({
-        @RequiredPort(name = "createRepo", type= PortType.SERVICE, className = FileService.class,optional = true)
+        @RequiredPort(name = "createRepo", type= PortType.SERVICE, className = FileService.class,optional = true,needCheckDependency = true)
 })
 
 
@@ -37,7 +41,7 @@ public class TriskellSiteDev extends ParentAbstractPage {
 
     protected String basePage = "overview.html";
 
-
+    protected ExecutorService executor;
     private File f;
     private PageRenderer krenderer = null;
 
@@ -47,14 +51,24 @@ public class TriskellSiteDev extends ParentAbstractPage {
     @Override
     public void startPage() {
         super.startPage();
-        File f1 = new File((String) super.getDictionary().get("folder"));
-        if (f1.isDirectory()){
-            f=f1;
-            krenderer = new PageRenderer(true,f,fs);
-        }
+        executor = Executors.newSingleThreadExecutor();
 
-         fs = this.getPortByName("createRepo",FileService.class);
-        System.out.println(fs);
+        File f1 = new File((String) super.getDictionary().get("folder"));
+
+        fs = this.getPortByName("createRepo",FileService.class);
+
+            if (isPortBinded("createRepo")){
+                f=new File(fs.getAbsolutePath("/src/main/resources/"));
+                krenderer = new PageRenderer(true,f,fs);
+
+            }
+                else{
+                if (f1.isDirectory())
+                    f=f1;
+                krenderer = new PageRenderer(true,f,null);
+            }
+
+
     }
 
     @Override
@@ -65,7 +79,6 @@ public class TriskellSiteDev extends ParentAbstractPage {
         if (f1.isDirectory()){
             f=f1;
         }
-        krenderer = new PageRenderer(true,f,fs);
 
 
     }
@@ -77,32 +90,29 @@ public class TriskellSiteDev extends ParentAbstractPage {
 
     @Override
     public KevoreeHttpResponse process(KevoreeHttpRequest request, KevoreeHttpResponse response) {
-
+        System.out.println("pass par la4" +request.getUrl());
 
         if (request.getUrl() != null && request.getUrl().startsWith("/TestEditor/saveContent/")){
-            //System.err.println(request.getResolvedParams().get("htmlEditor"));
+            System.out.println("pass par la2" +request.getUrl());
+
             try{
-                //System.out.println(request.getUrl().split("/")[3]);
                 if (isPortBinded("createRepo")){
-                    System.out.println("should save " + request.getUrl());
-                    String[] splits =  request.getUrl().split("/");
+                    final String[] splits =  request.getUrl().split("/");
                     String html = request.getResolvedParams().get("htmlEditor");
                     Document doc = Jsoup.parse(html);
-                    //Elements newsHeadlines = doc.select("#mp-itn b a");
                     Elements twitter = doc.select("div#twitter");
                     Document doc1 = Jsoup.parseBodyFragment("<div id=\"twitter\" class=\"span4 noteditable\">" +
                             "<h1>Twitter</h1>" +
                             "<p class=\"before-twitter\">Latest <a href=\"https://twitter.com/#!/triskell-team\">@Triskell</a> buzz:</p>" +
                             "<div id=\"tweets\" class=\"tweets\"></div></div>");
-
                     if (twitter.size()>0){
-
-                        Node twitter1 = doc1.select("#twitter").first();
-                      twitter.first().replaceWith(twitter1);
+                            Node twitter1 = doc1.select("#twitter").first();
+                            twitter.first().replaceWith(twitter1);
                     }
                     Elements scriptalohaeditor   = doc.select("#scriptalohaeditor");
+
                     scriptalohaeditor.first().remove();
-                    Elements conatainer   = doc.select("div.container");
+                    final Elements conatainer   = doc.select("div.container");
 
                     Elements links = doc.select("a[href^=/]"); // a with href
                     for (Node e: links)
@@ -114,31 +124,37 @@ public class TriskellSiteDev extends ParentAbstractPage {
                     {
                         e.attr("src",e.attr("src").replaceFirst("/","{urlpattern}"));
                     }
-
-
-
-                    System.out.println("should save " + conatainer.html());
-
-
-                    fs.saveFile("/src/main/resources/templates/html/" + splits[splits.length - 1], doc.html().getBytes());
+                     executor.execute(new Runnable() {
+                         @Override
+                         public void run() {
+                             fs.saveFile("/src/main/resources/templates/html/" + splits[splits.length - 1], conatainer.html().getBytes());
+                         }
+                     });
                 }
             }catch (Exception e){
                 e.printStackTrace();
                 return response;
             }
-        //response.setContent("Bad request");
-        return response;
+               response.setContent("ok");
+
+
+            return response;
 
         }
-        File f1=null;
-        if (isPortBinded("createRepo")){
-            f1=new File(fs.getAbsolutePath("/src/main/resources/"));
-            //System.out.println("path = " +f1);
-        }else{
-           f1=f;
+        System.out.println("pass par la3" +request.getUrl());
+
+
+
+        if (krenderer.checkForTemplateRequest(basePage, this, request, response)) {
+            System.out.println("pass par la" +request.getUrl());
+
+            return response;
         }
-        //System.out.println("path = " +f1);
-        if (FileServiceHelper.checkStaticFileFromDir(basePage, this, request, response, f1.getAbsolutePath())) {
+        System.out.println("pass par la5" +request.getUrl());
+
+
+        if (FileServiceHelper.checkStaticFileFromDir(basePage, this, request, response, f.getAbsolutePath())) {
+
             if (request.getUrl().equals("/") || request.getUrl().endsWith(".html") || request.getUrl().endsWith(".css")) {
                 String pattern = getDictionary().get("urlpattern").toString();
                 if (pattern.endsWith("**")) {
@@ -151,9 +167,8 @@ public class TriskellSiteDev extends ParentAbstractPage {
             }
             return response;
         }
-        if (krenderer.checkForTemplateRequest(basePage, this, request, response)) {
-            return response;
-        }
+        System.out.println("pass par la6" +request.getUrl());
+
 
         response.setContent("Bad request");
         return response;

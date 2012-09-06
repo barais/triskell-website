@@ -19,6 +19,8 @@ class PageRenderer(devmod: Boolean, folder: java.io.File, fs: FileService) {
 
   def checkForTemplateRequest(index: String, origin: AbstractPage, request: KevoreeHttpRequest, response: KevoreeHttpResponse): Boolean = {
     val urlPattern = origin.getDictionary.get("urlpattern").toString
+
+    println("URL = " +  request.getUrl + " "+ request.getCompleteUrl)
     handler.getLastParam(request.getUrl, urlPattern) match {
       case Some(reqP) => {
         if (reqP == "" || reqP == null || reqP == "/") {
@@ -40,7 +42,7 @@ class PageRenderer(devmod: Boolean, folder: java.io.File, fs: FileService) {
             } else {
               reqP
             }
-            //println(cleanupRequest + "==" + cleanupRep)
+            println(cleanupRequest + "==" + cleanupRep)
 
             cleanupRequest == (cleanupRep)
           }) match {
@@ -57,6 +59,8 @@ class PageRenderer(devmod: Boolean, folder: java.io.File, fs: FileService) {
   }
 
   def krender(name: String, currentURL: String, vars: HashMap[String, String], pattern: String): String = {
+    println(name + " " + currentURL+ " " + vars + " " +pattern)
+
     val sb = new StringBuffer()
     sb.append(kheader)
     sb.append(MenuRenderer.getMenuHtml(currentURL))
@@ -90,11 +94,13 @@ class PageRenderer(devmod: Boolean, folder: java.io.File, fs: FileService) {
 
     var st: InputStream = null
     if (fs != null){
+       println("pass par la")
        return new String(fs.getFileContent( "src/main/resources/templates/html/" + name ))
     } else{
-     if (devmod)
+     if (devmod)  {
+       println("pass par la1")
         st = new FileInputStream(new File(folder.getAbsolutePath + java.io.File.separator + "templates" + java.io.File.separator + "html" + java.io.File.separator + name))
-      else
+    }else
         st = getClass.getClassLoader.getResourceAsStream("templates/html/" + name)
 
       if (st != null) {
@@ -222,7 +228,24 @@ class PageRenderer(devmod: Boolean, folder: java.io.File, fs: FileService) {
       v.append("url  =  '/TestEditor/saveContent/"+name+"';\n")
       v.append("if (window.XMLHttpRequest) {                \n")
       v.append(" obj = new XMLHttpRequest();                    \n")
-      v.append("obj.open(\"POST\", url, true);                        \n")
+    v.append("obj.onreadystatechange = function(){                  \n")
+   //   v.append("document.ajax.dyn.value=\"Wait server...\";\n")
+    v.append("if(obj.readyState == 4)              \n")
+      v.append("{                                     \n")
+      v.append(" if(obj.status == 200)                   \n")
+      v.append(" {alert(\"Received:\" + obj.responseText); \n")
+     // v.append("   document.ajax.dyn.value=\"Received:\" + obj.responseText;\n")
+    v.append("  } \n")
+      v.append("   else \n")
+   //   v.append("  {         \n")
+        v.append(" {alert(\"Received:\" + obj.statusText); \n")
+
+        //v.append("    document.ajax.dyn.value=\"Error: returned status code \" + \n")
+    //v.append("      obj.status + \" \" + obj.statusText;                       \n")
+    v.append("  }              \n")
+      v.append("  }               \n")
+      v.append("};                   \n")
+    v.append("obj.open(\"POST\", url, true);                        \n")
       v.append("obj.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');\n")
       v.append("if (content != null){   \n")
       v.append("  obj.send('htmlEditor='+content);  \n")

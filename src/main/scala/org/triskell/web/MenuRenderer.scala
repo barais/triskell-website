@@ -56,7 +56,7 @@ object MenuRenderer {
       ("Bibliography", "{urlpattern}biblio", "biblio.html", HashMap[String, String]()),
       // ("Tools", "/tools", ""),
       //("Platforms", "/platform", ""),
-      ("Software", "{urlpattern}software", "software.html", DownloadHelper.getVariables),
+      ("Software", "{urlpattern}software", "software.html", HashMap[String, String]()),
       ("National projects", "{urlpattern}collaborations", "national.html", HashMap[String, String]()),
       ("International projects", "{urlpattern}collaborative_projects", "international.html", HashMap[String, String]()),
       ("Activity reports", "{urlpattern}activity_reports", "activity_reports.html", HashMap[String, String]()),
