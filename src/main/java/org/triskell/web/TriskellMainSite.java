@@ -25,7 +25,7 @@ public class TriskellMainSite extends ParentAbstractPage {
     private HashMap<String, byte[]> contentRawCache = new HashMap<String, byte[]>();
     private HashMap<String, String> contentTypeCache = new HashMap<String, String>();
 
-    private PageRenderer krenderer = new PageRenderer(false,null,null);
+    private PageRenderer krenderer = new PageRenderer(false,null,null,false);
 
     @Override
     public void startPage() {

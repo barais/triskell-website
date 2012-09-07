@@ -12,7 +12,7 @@
 
     <properties>
         <kevoree.include>*:*</kevoree.include>
-        <kevoree.version>1.8.4-SNAPSHOT</kevoree.version>
+        <kevoree.version>1.8.5-SNAPSHOT</kevoree.version>
     </properties>
 
     <dependencies>
