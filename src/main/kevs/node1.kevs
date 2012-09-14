@@ -1,0 +1,29 @@
+merge "mvn:org.kevoree.corelibrary.javase/org.kevoree.library.javase.javaseNode/{kevoree.version}"
+merge "mvn:org.kevoree.corelibrary.javase/org.kevoree.library.javase.nanohttp/{kevoree.version}"
+merge "mvn:org.kevoree.corelibrary.javase/org.kevoree.library.javase.defaultChannels/{kevoree.version}"
+merge "mvn:org.kevoree.corelibrary.javase/org.kevoree.library.javase.webserver.tjws/{kevoree.version}"
+merge "mvn:org.kevoree.corelibrary.javase/org.kevoree.library.javase.fileSystem.git/{kevoree.version}"
+merge "mvn:org.kevoree.web/org.kevoree.slides.framework/2.0.1-SNAPSHOT"
+merge "mvn:org.kevoree.web/org.kevoree.web.triskell/1.8.5-SNAPSHOT"
+
+addNode node1 : JavaSENode {logLevel = "INFO"}
+
+addComponent webSrv1@node1 : KTinyWebServer {port = "8090"}
+addComponent annotationSlides1@node1 : TriskellSiteDev { folder="/home/barais/workspaces/articles/triskell-website/src/main/resources/", urlpattern="/", siteType="edit"}
+addComponent gitfs1@node1 : GitFileSystemMineFirst { url="https://github.com/barais/triskell-website.git",login="TOCHANGE",pass="TOCHANGE",basedir="/tmp"}
+
+addChannel req1 : defMSG
+addChannel res1 : defMSG
+addChannel gitchannel1 : defSERVICE
+
+bind webSrv1.handler@node1 => req1
+bind annotationSlides1.request@node1 => req1
+bind annotationSlides1.content@node1 => res1
+bind webSrv1.response@node1 => res1
+bind annotationSlides1.createRepo@node1 => gitchannel1
+bind gitfs1.files@node1 => gitchannel1
+
+addGroup sync1 : NanoRestGroup
+addToGroup sync1 node1
+updateDictionary sync1 {port="8024"}@node1
+

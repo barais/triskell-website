@@ -14,6 +14,7 @@ import org.kevoree.library.javase.webserver.ParentAbstractPage;
 import org.triskell.web.PageRenderer;
 
 import java.io.File;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
@@ -33,7 +34,7 @@ import java.util.concurrent.ThreadPoolExecutor;
 })
 
 
-public class TriskellSiteDev extends ParentAbstractPage {
+public class TriskellSite extends ParentAbstractPage {
 
     protected String basePage = "overview.html";
     protected ExecutorService executor;
@@ -42,14 +43,20 @@ public class TriskellSiteDev extends ParentAbstractPage {
 
     FileService fs;
 
+    boolean activateCache=false;
 
     @Override
     public void startPage() {
         super.startPage();
+        contentRawCache.clear();
+        contentTypeCache.clear();
+        activateCache =  super.getDictionary().get("siteType").equals("prod");
+
         executor = Executors.newSingleThreadExecutor();
         File f1 = new File((String) super.getDictionary().get("folder"));
         fs = this.getPortByName("createRepo",FileService.class);
-           if (isPortBinded("createRepo")){
+
+        if (isPortBinded("createRepo")){
                 f=new File(fs.getAbsolutePath("/src/main/resources/"));
                 krenderer = new PageRenderer(true,f,fs, super.getDictionary().get("siteType").equals("edit"));
             }
@@ -63,6 +70,9 @@ public class TriskellSiteDev extends ParentAbstractPage {
     @Override
     public void updatePage() {
         super.updatePage();
+
+        contentRawCache.clear();
+        contentTypeCache.clear();
         File f1 = new File((String) super.getDictionary().get("folder"));
         fs = this.getPortByName("createRepo",FileService.class);
         if (f1.isDirectory()){
@@ -75,11 +85,19 @@ public class TriskellSiteDev extends ParentAbstractPage {
     @Override
     public void stopPage() {
         super.stopPage();
+        contentRawCache.clear();
+        contentTypeCache.clear();
+
     }
 
     @Override
     public KevoreeHttpResponse process(KevoreeHttpRequest request, KevoreeHttpResponse response) {
-
+        if (this.activateCache){
+        if (contentTypeCache.containsKey(request.getUrl()) && request.getUrl() != null && !request.getUrl().startsWith("/TestEditor/saveContent/")) {
+            response.setRawContent(contentRawCache.get(request.getUrl()));
+            response.getHeaders().put("Content-Type", contentTypeCache.get(request.getUrl()));
+            return response;
+        }                       }
         if (request.getUrl() != null && request.getUrl().startsWith("/TestEditor/saveContent/")){
 
             try{
@@ -139,11 +157,16 @@ public class TriskellSiteDev extends ParentAbstractPage {
             }
                response.setContent("ok");
 
-
+            if (this.activateCache){
+                cacheResponse(request, response);
+            }
             return response;
 
         }
         if (krenderer.checkForTemplateRequest(basePage, this, request, response)) {
+            if (this.activateCache){
+                cacheResponse(request, response);
+            }
             return response;
         }
         if (FileServiceHelper.checkStaticFileFromDir(basePage, this, request, response, f.getAbsolutePath())) {
@@ -158,11 +181,27 @@ public class TriskellSiteDev extends ParentAbstractPage {
                 }
                 response.setContent(response.getContent().replace("{urlpattern}", pattern));
             }
+            if (this.activateCache){
+                cacheResponse(request, response);
+            }
             return response;
         }
         response.setContent("Bad request");
         return response;
     }
 
+
+    private HashMap<String, byte[]> contentRawCache = new HashMap<String, byte[]>();
+    private HashMap<String, String> contentTypeCache = new HashMap<String, String>();
+
+
+    public void cacheResponse(KevoreeHttpRequest request, KevoreeHttpResponse response) {
+        if (response.getRawContent() != null) {
+            contentRawCache.put(request.getUrl(), response.getRawContent());
+        } else {
+            contentRawCache.put(request.getUrl(), response.getContent().getBytes());
+        }
+        contentTypeCache.put(request.getUrl(), response.getHeaders().get("Content-Type"));
+    }
 
 }
